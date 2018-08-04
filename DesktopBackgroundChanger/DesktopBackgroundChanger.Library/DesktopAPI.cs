@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DesktopBackgroundChanger.Library
@@ -79,7 +80,14 @@ namespace DesktopBackgroundChanger.Library
                                  backgroungFileName,
                                  SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
 
-            Logger.Log.InfoFormat("Desktop background set.");
+            Logger.Log.Info("Desktop background set.");
+        }
+
+        public void WaitInterval(int milliseconds)
+        {
+            Logger.Log.InfoFormat("Waiting for '{0}' milliseconds.", milliseconds);
+
+            Thread.Sleep(milliseconds);
         }
 
         #endregion

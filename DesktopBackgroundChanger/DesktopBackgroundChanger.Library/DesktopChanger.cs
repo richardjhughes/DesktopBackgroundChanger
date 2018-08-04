@@ -26,9 +26,14 @@ namespace DesktopBackgroundChanger.Library
             if (imagePaths.Count <= 0)
                 throw new InvalidOperationException(String.Format("No images found in directory: '{0}'.", settings.ImageLocationDirectory));
 
-            Logger.Log.InfoFormat("Setting desktop background image: '{0}'.", imagePaths[0]);
+            foreach (var imagePath in imagePaths)
+            {
+                Logger.Log.InfoFormat("Setting desktop background image: '{0}'.", imagePath);
 
-            api.SetDesktopBackground(imagePaths[0]);
+                api.SetDesktopBackground(imagePath);
+
+                //api.WaitInterval(settings.WaitInterval);
+            }
         }
 
         #endregion

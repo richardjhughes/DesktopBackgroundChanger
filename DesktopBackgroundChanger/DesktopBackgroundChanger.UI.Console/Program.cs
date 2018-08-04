@@ -2,7 +2,9 @@
 using log4net.Config;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,7 +14,7 @@ namespace DesktopBackgroundChanger.UI.Console
     {
         static void Main(string[] args)
         {
-            XmlConfigurator.Configure(new System.IO.FileInfo("logconfig.xml"));
+            XmlConfigurator.Configure(new FileInfo("logconfig.xml"));
 
             Logger.Log.Info(String.Empty);
             Logger.Log.Info("==============================");
@@ -22,7 +24,7 @@ namespace DesktopBackgroundChanger.UI.Console
             {
                 var settings = new ConfigSettings();
 
-                settings.ImageLocationDirectory = @"D:\OneDrive\Pictures\Desktop Backgrounds\DesktopBackgroundChanger\";
+                settings.ImageLocationDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "TestImages");
 
                 var changer = new DesktopChanger();
                 changer.Run(settings);
