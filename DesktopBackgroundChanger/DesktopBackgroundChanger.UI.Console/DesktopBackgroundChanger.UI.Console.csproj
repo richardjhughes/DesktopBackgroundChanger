@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D6D24C82-ADEC-499A-A5AC-C02678824ED3}</ProjectGuid>
+    <ProjectGuid>{525BB572-BFB0-4E7C-947E-49A31BF40830}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>DesktopBackgroundChanger</RootNamespace>
-    <AssemblyName>DesktopBackgroundChanger</AssemblyName>
+    <RootNamespace>DesktopBackgroundChanger.UI.Console</RootNamespace>
+    <AssemblyName>DesktopBackgroundChanger.UI.Console</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -47,6 +47,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DesktopBackgroundChanger.Library\DesktopBackgroundChanger.Library.csproj">
+      <Project>{3de3eb60-c0b5-4fb6-9b7d-63f2833a3de4}</Project>
+      <Name>DesktopBackgroundChanger.Library</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

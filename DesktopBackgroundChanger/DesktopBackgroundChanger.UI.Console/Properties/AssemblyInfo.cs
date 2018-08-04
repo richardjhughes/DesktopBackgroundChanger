@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("DesktopBackgroundChanger")]
+[assembly: AssemblyTitle("DesktopBackgroundChanger.UI.Console")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DesktopBackgroundChanger")]
+[assembly: AssemblyProduct("DesktopBackgroundChanger.UI.Console")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("d6d24c82-adec-499a-a5ac-c02678824ed3")]
+[assembly: Guid("525bb572-bfb0-4e7c-947e-49a31bf40830")]
 
 // Version information for an assembly consists of the following four values:
 //
