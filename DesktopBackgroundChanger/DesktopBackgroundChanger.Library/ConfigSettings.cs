@@ -14,7 +14,7 @@ namespace DesktopBackgroundChanger.Library
         public struct Image
         {
             public string Name;
-            public DateTime Time;
+            public TimeSpan Time;
         }
 
         #endregion
@@ -34,10 +34,30 @@ namespace DesktopBackgroundChanger.Library
             if (String.IsNullOrWhiteSpace(xml))
                 throw new ArgumentNullException("xml");
 
-            var doc = XDocument.Parse(xml);
+            try
+            {
+                Logger.Log.Info("Loading XML:");
+                Logger.Log.Info(xml);
 
-            this.ImageLocationDirectory = (from e in doc.Descendants("ImageLocationDirectory")
-                                           select e).First().Value;
+                var doc = XDocument.Parse(xml);
+
+                var desktopBackgroundSettings = doc.Element("DesktopBackgroundSettings");
+
+                this.ImageLocationDirectory = desktopBackgroundSettings.Element("ImageLocationDirectory").Value;
+
+                this.Images = (from e in desktopBackgroundSettings.Element("Images").Elements("Image")
+                               select new Image()
+                               {
+                                   Name = e.Element("Name").Value,
+                                   Time = TimeSpan.Parse(e.Element("Time").Value),
+                               }).ToList();
+            }
+            catch (Exception ex)
+            {
+                Logger.Log.Fatal("Failed to load XML.", ex);
+
+                throw new InvalidOperationException("Failed to load XML", ex);
+            }
         }
 
         #endregion

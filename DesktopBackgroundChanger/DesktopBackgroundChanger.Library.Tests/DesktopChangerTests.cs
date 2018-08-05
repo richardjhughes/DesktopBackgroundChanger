@@ -75,18 +75,42 @@ namespace DesktopBackgroundChanger.Library.Tests
         }
 
         [TestMethod]
-        public void Run_SetsFirstImageAsDesktopBackground()
+        public void Run_SetsImagesAtTime()
         {
             var settings = new ConfigSettings()
             {
                 ImageLocationDirectory = "dir",
+                Images = new List<ConfigSettings.Image>()
+                {
+                    new ConfigSettings.Image()
+                    {
+                        Name = "  image1.png",
+                        Time = new TimeSpan(0, 0, 0),
+                    },
+                    new ConfigSettings.Image()
+                    {
+                        Name = "image2.PNG",
+                        Time = new TimeSpan(1, 2, 0),
+                    },
+                    new ConfigSettings.Image()
+                    {
+                        Name = "image3.png",
+                        Time = new TimeSpan(3, 6, 0),
+                    },
+                    new ConfigSettings.Image()
+                    {
+                        Name = "Image4.png  ",
+                        Time = new TimeSpan(14, 40, 0),
+                    },
+                },
             };
 
             var images = new List<string>()
             {
-                "image1",
-                "image2",
-                "image3",
+                "image2.png",
+                "IMAGE3.png",
+                " image4.pNg",
+                "image1.png  ",
             };
 
             this.MockDesktopAPI.Setup(m => m.GetImagesFromDirectory(It.IsAny<string>()))
@@ -95,6 +119,55 @@ namespace DesktopBackgroundChanger.Library.Tests
             this.DesktopChanger.Run(settings);
 
             this.MockDesktopAPI.Verify(m => m.SetDesktopBackground(images[0]));
+            this.MockDesktopAPI.Verify(m => m.WaitUntilTime(settings.Images[0].Time));
+
+            this.MockDesktopAPI.Verify(m => m.SetDesktopBackground(images[1]));
+            this.MockDesktopAPI.Verify(m => m.WaitUntilTime(settings.Images[1].Time));
+
+            this.MockDesktopAPI.Verify(m => m.SetDesktopBackground(images[2]));
+            this.MockDesktopAPI.Verify(m => m.WaitUntilTime(settings.Images[2].Time));
+
+            this.MockDesktopAPI.Verify(m => m.SetDesktopBackground(images[3]));
+            this.MockDesktopAPI.Verify(m => m.WaitUntilTime(settings.Images[3].Time));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void Run_SettingsContainsImageNoFoundInImageDirectory_ThrowsInvalidOperationException()
+        {
+            var settings = new ConfigSettings()
+            {
+                ImageLocationDirectory = "dir",
+                Images = new List<ConfigSettings.Image>()
+                {
+                    new ConfigSettings.Image()
+                    {
+                        Name = "image1.png",
+                        Time = new TimeSpan(0, 0, 0),
+                    },
+                    new ConfigSettings.Image()
+                    {
+                        Name = "image2.png",
+                        Time = new TimeSpan(1, 2, 0),
+                    },
+                    new ConfigSettings.Image()
+                    {
+                        Name = "image3.png",
+                        Time = new TimeSpan(1, 2, 0),
+                    },
+                },
+            };
+
+            var images = new List<string>()
+            {
+                "image1.png",
+                "image2.png",
+            };
+
+            this.MockDesktopAPI.Setup(m => m.GetImagesFromDirectory(It.IsAny<string>()))
+                               .Returns(images);
+
+            this.DesktopChanger.Run(settings);
         }
 
         #endregion

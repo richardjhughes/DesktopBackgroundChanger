@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DesktopBackgroundSettings>
+  <ImageLocationDirectory></ImageLocationDirectory>
+  <Images>
+    <Image>
+      <Name>test1.png</Name>
+      <Time>13:32:00</Time>
+    </Image>
+    <Image>
+      <Name>test2.png</Name>
+      <Time>13:32:10</Time>
+    </Image>
+    <Image>
+      <Name>test3.png</Name>
+      <Time>13:32:15</Time>
+    </Image>
+  </Images>
+</DesktopBackgroundSettings>

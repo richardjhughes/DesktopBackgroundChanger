@@ -14,7 +14,7 @@ namespace DesktopBackgroundChanger.Library
 
         void SetDesktopBackground(string imagePath);
 
-        void WaitInterval(int milliseconds);
+        void WaitUntilTime(TimeSpan time);
 
         #endregion
     }
