@@ -24,9 +24,12 @@ namespace DesktopBackgroundChanger.UI.Console
             {
                 var settings = new ConfigSettings();
 
-                settings.LoadFromXML(File.ReadAllText("TestImages\\config.xml"));
+                settings.LoadFromXML(File.ReadAllText("config.xml"));
 
-                settings.ImageLocationDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "TestImages");
+                if (String.IsNullOrWhiteSpace(settings.ImageLocationDirectory))
+                {
+                    settings.ImageLocationDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "TestImages");
+                }
 
                 var changer = new DesktopChanger();
                 changer.Run(settings);

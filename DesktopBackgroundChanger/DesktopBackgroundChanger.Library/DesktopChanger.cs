@@ -26,8 +26,10 @@ namespace DesktopBackgroundChanger.Library
             if (imagePaths.Count <= 0)
                 throw new InvalidOperationException(String.Format("No images found in directory: '{0}'.", settings.ImageLocationDirectory));
 
-            foreach (var image in settings.Images)
+            for (int i = 0; i < settings.Images.Count; i++)
             {
+                var image = settings.Images[i];
+
                 var imageName = image.Name.Trim().ToLower();
 
                 var imagePath = (from path in imagePaths
@@ -44,7 +46,18 @@ namespace DesktopBackgroundChanger.Library
 
                 api.SetDesktopBackground(imagePath);
 
-                api.WaitUntilTime(image.Time);
+                var milliseconds = 0;
+
+                if (i < settings.Images.Count - 1)
+                {
+                    milliseconds = (int)(settings.Images[i + 1].Time - settings.Images[i].Time).TotalMilliseconds;
+                }
+                else
+                {
+                    milliseconds = (int)(new TimeSpan(24, 0, 0) - settings.Images[0].Time - settings.Images[i].Time).TotalMilliseconds;
+                }
+
+                api.WaitInterval(milliseconds);
             }
         }
 

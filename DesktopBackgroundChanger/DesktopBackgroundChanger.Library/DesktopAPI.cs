@@ -83,15 +83,11 @@ namespace DesktopBackgroundChanger.Library
             Logger.Log.Info("Desktop background set.");
         }
 
-        public void WaitUntilTime(TimeSpan time)
+        public void WaitInterval(int milliseconds)
         {
-            Logger.Log.InfoFormat("Waiting for the time '{0}'.", time);
+            Logger.Log.InfoFormat("Waiting for '{0}' milliseconds.", milliseconds);
 
-            var currentTime = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
-
-            var timeToWait = time - currentTime;
-
-            Thread.Sleep((int)timeToWait.TotalMilliseconds);
+            Thread.Sleep(milliseconds);
         }
 
         #endregion
