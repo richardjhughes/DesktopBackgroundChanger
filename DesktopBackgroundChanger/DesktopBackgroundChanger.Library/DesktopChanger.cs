@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MoreLinq;
 
 namespace DesktopBackgroundChanger.Library
 {
@@ -26,9 +27,25 @@ namespace DesktopBackgroundChanger.Library
             if (imagePaths.Count <= 0)
                 throw new InvalidOperationException(String.Format("No images found in directory: '{0}'.", settings.ImageLocationDirectory));
 
-            for (int i = 0; i < settings.Images.Count; i++)
+            var images = settings.Images.OrderBy(i => i.Time.Ticks).ToList();
+            images = images.DistinctBy(m => m.Time).ToList();
+
+            var currentTime = api.GetTime();
+            var time = new TimeSpan(currentTime.Hour, currentTime.Minute, currentTime.Second);
+
+            var startingIndex = 0;
+
+            do
             {
-                var image = settings.Images[i];
+                startingIndex++;
+            } while (time > images[startingIndex].Time);
+
+            // we want the previous image
+            startingIndex--;
+
+            for (int i = startingIndex; i < images.Count; i++)
+            {
+                var image = images[i];
 
                 var imageName = image.Name.Trim().ToLower();
 
@@ -48,13 +65,13 @@ namespace DesktopBackgroundChanger.Library
 
                 var milliseconds = 0;
 
-                if (i < settings.Images.Count - 1)
+                if (i < images.Count - 1)
                 {
-                    milliseconds = (int)(settings.Images[i + 1].Time - settings.Images[i].Time).TotalMilliseconds;
+                    milliseconds = (int)(images[i + 1].Time - images[i].Time).TotalMilliseconds;
                 }
                 else
                 {
-                    milliseconds = (int)(new TimeSpan(24, 0, 0) - settings.Images[0].Time - settings.Images[i].Time).TotalMilliseconds;
+                    milliseconds = (int)(new TimeSpan(24, 0, 0) - images[0].Time - images[i].Time).TotalMilliseconds;
                 }
 
                 api.WaitInterval(milliseconds);

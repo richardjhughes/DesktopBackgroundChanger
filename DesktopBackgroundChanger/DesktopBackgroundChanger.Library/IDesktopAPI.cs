@@ -16,6 +16,8 @@ namespace DesktopBackgroundChanger.Library
 
         void WaitInterval(int milliseconds);
 
+        DateTime GetTime();
+
         #endregion
     }
 }

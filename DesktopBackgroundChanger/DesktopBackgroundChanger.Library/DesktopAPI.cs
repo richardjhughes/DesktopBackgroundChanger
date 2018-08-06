@@ -90,6 +90,11 @@ namespace DesktopBackgroundChanger.Library
             Thread.Sleep(milliseconds);
         }
 
+        public DateTime GetTime()
+        {
+            return DateTime.Now;
+        }
+
         #endregion
     }
 }
